@@ -1,0 +1,10 @@
+feed_url = 'https://neutsch.org/api.php?hidebots=1&days=30&limit=50&action=feedrecentchanges&feedformat=rss'
+forum_url_login = 'https://forum.neutsch.org/index.php?action=login'
+forum_url_post = 'https://forum.neutsch.org/index.php?action=post;topic=3711.0'
+forum_user = 'VerBot'
+forum_pass = ''
+db_user = ''
+db_pass = ''
+db_host = ''
+db_name = ''
+
