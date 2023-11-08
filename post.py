@@ -56,7 +56,6 @@ if __name__ == '__main__':
     )
     cursor = db.cursor()
     for entry in d.entries[::-1]:
-        print(message(entry))
         guid = entry.id
         id_hash = hashlib.sha256(guid.encode('utf-8')).hexdigest()
         cursor.execute('''
