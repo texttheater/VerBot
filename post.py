@@ -73,4 +73,4 @@ if __name__ == '__main__':
                 VALUES (%s)''',
                 (id_hash,)
             )
-    db.commit()
+            db.commit()
