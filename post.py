@@ -34,7 +34,7 @@ def post(b, entry):
     b['subject'] = entry.title
     b['message'] = message(entry)
     b['preview'] = None
-    b.submit_selected()
+    b.submit_selected().raise_for_status()
 
 
 if __name__ == '__main__':
@@ -46,7 +46,7 @@ if __name__ == '__main__':
     b.select_form('#frmLogin')
     b['user'] = config.forum_user
     b['passwrd'] = config.forum_pass
-    b.submit_selected()
+    b.submit_selected().raise_for_status()
     # database
     db = mysql.connector.connect(
         user=config.db_user,
