@@ -16,6 +16,11 @@ def wikiurl(title):
     return title
 
 
+def htmlsafe(html):
+    """Escape HTML for use in SMF [html]...[/html] tags"""
+    return html.replace('[/html]', '&#91;/html&#93;')
+
+
 def message(entry):
     author = entry.author
     author_url = f'https://neutsch.org/Benutzer:{wikiurl(author)}'
@@ -25,7 +30,7 @@ def message(entry):
     return f'[url={author_url}]{author}[/url] ' \
         f'hat folgende [url={change_url}]Änderung[/url] ' \
         f'an der Seite [url={title_url}]{title}[/url] vorgenommen:\n\n' \
-        f'[html]{entry.description}[/html]'
+        f'[html]{htmlsafe(entry.description)}[/html]'
 
 
 def post(b, entry):
