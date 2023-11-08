@@ -24,7 +24,7 @@ def message(entry):
     change_url = entry.link
     return f'[url={author_url}]{author}[/url] ' \
         f'hat folgende [url={change_url}]Änderung[/url] ' \
-        f'an der Seite [url={title_url}]title[/url] vorgenommen:\n\n' \
+        f'an der Seite [url={title_url}]{title}[/url] vorgenommen:\n\n' \
         f'[html]{entry.description}[/html]'
 
 
