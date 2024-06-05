@@ -43,7 +43,7 @@ def post(b, entry):
 
 
 if __name__ == '__main__':
-    # feed paresr
+    # feed parser
     d = feedparser.parse(config.feed_url)
     # forum browser
     b = mechanicalsoup.StatefulBrowser()
