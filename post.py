@@ -73,8 +73,8 @@ if __name__ == '__main__':
         if not count:
             post(b, entry)
             cursor.execute('''
-                INSERT INTO posted_entries (id)
-                VALUES (%s)''',
+                INSERT INTO posted_entries (id, posted)
+                VALUES (%s NOW())''',
                 (id_hash,)
             )
             db.commit()
