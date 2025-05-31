@@ -74,7 +74,7 @@ if __name__ == '__main__':
             post(b, entry)
             cursor.execute('''
                 INSERT INTO posted_entries (id, posted)
-                VALUES (%s NOW())''',
+                VALUES (%s, NOW())''',
                 (id_hash,)
             )
             db.commit()
