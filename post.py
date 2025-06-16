@@ -63,6 +63,9 @@ if __name__ == '__main__':
     for entry in d.entries[::-1]:
         guid = entry.id
         id_hash = hashlib.sha256(guid.encode('utf-8')).hexdigest()
+        entry_hash = hashlib.sha256(
+            entry.guid.encode('utf-8') + entry.description.encode('utf-8'),
+        ).hexdigest()
         cursor.execute('''
             SELECT COUNT(*)
             FROM posted_entries
@@ -73,8 +76,8 @@ if __name__ == '__main__':
         if not count:
             post(b, entry)
             cursor.execute('''
-                INSERT INTO posted_entries (id, url)
-                VALUES (%s, %s)''',
-                (id_hash, guid)
+                INSERT INTO posted_entries (id, entry_hash, url)
+                VALUES (%s, %s, %s)''',
+                (id_hash, entry_hash, guid)
             )
             db.commit()
