@@ -60,12 +60,15 @@ if __name__ == '__main__':
         database=config.db_name,
     )
     cursor = db.cursor()
+    # go through entries
     for entry in d.entries[::-1]:
+        # compute entry hash
         guid = entry.id
         id_hash = hashlib.sha256(guid.encode('utf-8')).hexdigest()
         entry_hash = hashlib.sha256(
             entry.guid.encode('utf-8') + entry.description.encode('utf-8'),
         ).hexdigest()
+        # check if entry has already been processed
         cursor.execute('''
             SELECT COUNT(*)
             FROM posted_entries
@@ -73,6 +76,7 @@ if __name__ == '__main__':
             (id_hash, entry_hash)
         )
         count = cursor.fetchall()[0][0]
+        # if not, process it
         if not count:
             post(b, entry)
             cursor.execute('''
