@@ -72,8 +72,8 @@ if __name__ == '__main__':
         cursor.execute('''
             SELECT COUNT(*)
             FROM posted_entries
-            WHERE id = %s OR entry_hash = %s''',
-            (id_hash, entry_hash)
+            WHERE entry_hash = %s''',
+            (entry_hash,)
         )
         count = cursor.fetchall()[0][0]
         # if not, process it
