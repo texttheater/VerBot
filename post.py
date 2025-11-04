@@ -35,11 +35,12 @@ def message(entry):
 
 def post(b, entry):
     b.open(config.forum_url_post)
-    b.select_form('#postmodify')
+    form = b.select_form('#postmodify')
     b['subject'] = entry.title
     b['message'] = message(entry)
-    b['preview'] = None
-    b.submit_selected().raise_for_status()
+    form.choose_submit('post')
+    response = b.submit_selected()
+    response.raise_for_status()
 
 
 if __name__ == '__main__':
