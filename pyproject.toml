@@ -1,0 +1,6 @@
+[project]
+name = "verbot"
+version = "0.1.0"
+description = "Posts changes from a MediaWiki to a Simple Machines Forum"
+requires-python = ">=3.11"
+dependencies = ["feedparser", "MechanicalSoup", "mysql-connector-python"]
