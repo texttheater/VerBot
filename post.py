@@ -74,7 +74,7 @@ if __name__ == '__main__':
             WHERE entry_hash = ?''',
             (entry_hash,),
         )
-        count = cursor.fetchall()[0][0]
+        count = res.fetchall()[0][0]
         # if not, process it
         if not count:
             post(b, entry)
