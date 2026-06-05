@@ -1,10 +1,11 @@
+from datetime import datetime as dt
 import hashlib
 import urllib.parse
 
 
 import feedparser
 import mechanicalsoup
-import mysql.connector
+import sqlite3
 
 
 import config
@@ -54,13 +55,11 @@ if __name__ == '__main__':
     b['passwrd'] = config.forum_pass
     b.submit_selected().raise_for_status()
     # database
-    db = mysql.connector.connect(
-        user=config.db_user,
-        password=config.db_pass,
-        host=config.db_host,
-        database=config.db_name,
+    con = sqlite3.connect(config.database)
+    con.execute(
+        'CREATE TABLE IF NOT EXISTS '
+        'posted_entries (entry_hash PRIMARY KEY, url, time)',
     )
-    cursor = db.cursor()
     # go through entries
     for entry in d.entries[::-1]:
         # compute entry hash
@@ -69,19 +68,19 @@ if __name__ == '__main__':
             entry.guid.encode('utf-8') + entry.description.encode('utf-8'),
         ).hexdigest()
         # check if entry has already been processed
-        cursor.execute('''
+        res = con.execute('''
             SELECT COUNT(*)
             FROM posted_entries
-            WHERE entry_hash = %s''',
-            (entry_hash,)
+            WHERE entry_hash = ?''',
+            (entry_hash,),
         )
         count = cursor.fetchall()[0][0]
         # if not, process it
         if not count:
             post(b, entry)
-            cursor.execute('''
-                INSERT INTO posted_entries (entry_hash, url)
-                VALUES (%s, %s)''',
-                (entry_hash, guid)
+            cursor.execute(
+                'INSERT INTO posted_entries (entry_hash, url, time) '
+                'VALUES (?, ?, ?) ',
+                (entry_hash, guid, str(dt.now())),
             )
             db.commit()
