@@ -78,7 +78,7 @@ if __name__ == '__main__':
         # if not, process it
         if not count:
             post(b, entry)
-            cursor.execute(
+            con.execute(
                 'INSERT INTO posted_entries (entry_hash, url, time) '
                 'VALUES (?, ?, ?) ',
                 (entry_hash, guid, str(dt.now())),
