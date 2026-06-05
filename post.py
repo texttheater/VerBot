@@ -83,4 +83,4 @@ if __name__ == '__main__':
                 'VALUES (?, ?, ?) ',
                 (entry_hash, guid, str(dt.now())),
             )
-            db.commit()
+            con.commit()
